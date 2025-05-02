@@ -26,7 +26,6 @@ export async function updateSubscriptionStatus(id: string, active: boolean) {
     const subscriptionIndex = storedSubscriptions.findIndex(sub => sub.id === id);
     
     if (subscriptionIndex !== -1) {
-      // Atualiza apenas o status da assinatura
       storedSubscriptions[subscriptionIndex] = {
         ...storedSubscriptions[subscriptionIndex],
         active

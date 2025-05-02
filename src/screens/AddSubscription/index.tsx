@@ -47,6 +47,10 @@ export function AddSubscription() {
 
   const navigation = useNavigation();
 
+  function handleNavigateToHome() {
+    navigation.navigate('home');
+  };
+
   function handleDateChange(text: string) {
     const maskedDate = applyDateMask(text);
     setNextBilling(maskedDate);
@@ -56,10 +60,6 @@ export function AddSubscription() {
     const maskedValue = applyValueMask(text);
     setPrice(maskedValue);
   };
-
-  function handleNavigateToHome() {
-    navigation.navigate('home');
-  }
   
   function handleSelectService(service: Service) {
     setSelectedService(service);
@@ -114,7 +114,7 @@ export function AddSubscription() {
         active: isActive,
       });
 
-      console.log('Assinatura salva com sucesso:', data);
+      //console.log('Assinatura salva com sucesso:', data);
       Alert.alert('SubsTracker', 'Assinatura salva com sucesso!');
       navigation.navigate('home');
     } catch (error) {
@@ -133,7 +133,11 @@ export function AddSubscription() {
           <Title>Nova Assinatura</Title>
         </HeaderActions>
       </Header>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView 
+        showsVerticalScrollIndicator={false}
+        keyboardDismissMode='on-drag'
+        automaticallyAdjustKeyboardInsets
+        >
         <Form>
           <InputContainer>
             <Label>Serviço</Label>

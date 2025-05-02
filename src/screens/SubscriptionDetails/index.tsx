@@ -51,13 +51,13 @@ export function SubscriptionDetails() {
   const params = routes.params as RouteParams;
   const navigation = useNavigation();
 
-  const handleToggleActive = () => {
-    setTempIsActive(!tempIsActive);
-  };
-
   function handleNavigateToHome() {
     navigation.navigate('home');
   }
+
+  const handleToggleActive = () => {
+    setTempIsActive(!tempIsActive);
+  };
 
   async function getSubscriptionDetails() {
     try {
@@ -67,18 +67,18 @@ export function SubscriptionDetails() {
       setTempIsActive(response.active);
     } catch (error) {
       console.error('Erro ao obter detalhes da assinatura:', error);
-      Alert.alert('Erro', 'Erro ao carregar detalhes da assinatura. Tente novamente.');
+      Alert.alert('SubsTracker', 'Erro ao carregar detalhes da assinatura. Tente novamente.');
     }
   }
 
   async function handleDeleteSubscription(id: string) {
     try {
       await deleteSubscription(id);
-      Alert.alert('Sucesso!', 'Assinatura excluída com sucesso!');
+      Alert.alert('SubsTracker', 'Assinatura excluída com sucesso!');
       navigation.navigate('home');
     } catch (error) {
       console.error('Erro ao excluir assinatura:', error);
-      Alert.alert('Erro', 'Erro ao excluir assinatura. Tente novamente.');
+      Alert.alert('SubsTracker', 'Erro ao excluir assinatura. Tente novamente.');
     }
   }
 
@@ -87,14 +87,14 @@ export function SubscriptionDetails() {
       if (tempIsActive !== isActive) {
         await updateSubscriptionStatus(params.id, tempIsActive);
         setIsActive(tempIsActive);
-        Alert.alert('Sucesso', 'Status da assinatura atualizado com sucesso!');
+        Alert.alert('SubsTracker', 'Status da assinatura atualizado com sucesso!');
         navigation.navigate('home');
       } else {
         console.log('Status da assinatura não foi alterado.');
       }
     } catch (error) {
       console.error('Erro ao atualizar status da assinatura:', error);
-      Alert.alert('Erro', 'Erro ao atualizar status da assinatura. Tente novamente.');
+      Alert.alert('SubsTracker', 'Erro ao atualizar status da assinatura. Tente novamente.');
     }
   }
 
@@ -106,7 +106,7 @@ export function SubscriptionDetails() {
     <Container>
       <Header>
         <TouchableOpacity onPress={handleNavigateToHome}>
-          <Ionicons name="arrow-back" size={24} color="#1a1a1a" />
+          <Ionicons name="arrow-back" size={24} color="#6C63FF" />
         </TouchableOpacity>
         <HeaderActions>
           <TouchableOpacity onPress={() => handleDeleteSubscription(params.id)}>

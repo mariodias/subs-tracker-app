@@ -25,7 +25,7 @@ export const HeaderActions = styled.View`
 export const Title = styled.Text`
   font-size: 24px;
   font-weight: bold;
-  color: #000000;
+  color: #6C63FF;
   margin-right: 25%;
 `;
 

@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { ScrollView } from 'react-native';
+import { Alert, ScrollView } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -46,6 +46,7 @@ export function Home() {
       
     } catch (error) {
       console.error('Erro ao carregar assinaturas:', error);
+      Alert.alert('SubsTracker', 'Não foi possível carregar as assinaturas. Tente novamente mais tarde.');
     }
   }
 
