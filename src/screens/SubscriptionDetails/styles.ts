@@ -1,4 +1,3 @@
-// import styled from 'styled-components/native';
 import styled from '@emotion/native';
 
 export const Container = styled.View`
@@ -8,11 +7,17 @@ export const Container = styled.View`
 `;
 
 export const Header = styled.View`
-  margin-bottom: 24px;
-  margin-top: 40px;
+  margin-bottom: 40px;
+  margin-top: 60px;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+`;
+
+export const HeaderTitle = styled.Text`
+  font-size: 20px;
+  font-weight: bold;
+  color: #6C63FF;
 `;
 
 export const HeaderActions = styled.View`
@@ -36,10 +41,15 @@ export const ServiceContainer = styled.View`
 `;
 
 export const ServiceIcon = styled.Image`
-  width: 80px;
-  height: 80px;
-  border-radius: 40px;
+  width: 75px;
+  height: 75px;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
   margin-bottom: 16px;
+  border-color: #f5f5f5;
+  border-width: 2px;
 `;
 
 export const ServiceName = styled.Text`
@@ -109,11 +119,6 @@ export const EditButtonText = styled.Text`
   font-size: 16px;
   font-weight: bold;
 `;
-
-// export const Switch = styled.Switch.attrs({
-//   trackColor: { false: '#767577', true: '#6C63FF' },
-//   thumbColor: '#f4f3f4',
-// })``;
 
 export const Switch = styled.Switch(props => ({
   trackColor: { false: '#767577', true: '#6C63FF' },

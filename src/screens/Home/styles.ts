@@ -1,4 +1,3 @@
-// import styled from 'styled-components/native';
 import styled from '@emotion/native';
 
 export const Container = styled.View`
@@ -15,8 +14,12 @@ export const Title = styled.Text`
 `;
 
 export const Header = styled.View`
-  margin-bottom: 10px;
-  margin-top: 40px;
+  top: 50px;
+  margin-bottom: 60px;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 export const AddButton = styled.TouchableOpacity`

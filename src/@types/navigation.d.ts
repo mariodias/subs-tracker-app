@@ -6,6 +6,7 @@ export declare global {
       subscriptionDetails: {
         id: string;
       };
-      }
+      statistics: undefined;
     }
   }
+}

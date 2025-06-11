@@ -1,6 +1,4 @@
-// import styled from 'styled-components/native';
 import styled from '@emotion/native';
-
 
 export const Container = styled.View`
   flex: 1;
@@ -9,8 +7,8 @@ export const Container = styled.View`
 `;
 
 export const Header = styled.View`
-  margin-bottom: 60px;
-  margin-top: 40px;
+  margin-bottom: 40px;
+  margin-top: 60px;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
@@ -23,10 +21,9 @@ export const HeaderActions = styled.View`
 `;
 
 export const Title = styled.Text`
-  font-size: 24px;
+  font-size: 20px;
   font-weight: bold;
   color: #6C63FF;
-  margin-right: 25%;
 `;
 
 export const Form = styled.View`
@@ -81,15 +78,10 @@ export const ButtonText = styled.Text`
 `;
 
 export const Switch = styled.Switch(props => ({
-  trackColor: { false: '#767577', true: '#6C63FF' },
+  trackColor: { false: '#FFFFFF', true: '#6C63FF' },
   thumbColor: '#f4f3f4',
   ...props,
 }));
-
-// export const Switch = styled.Switch.attrs({
-//   trackColor: { false: '#767577', true: '#6C63FF' },
-//   thumbColor: '#f4f3f4',
-// })``;
 
 export const SwitchContainer = styled.View`
   flex-direction: row;
@@ -136,9 +128,14 @@ export const ServiceItem = styled.TouchableOpacity`
 `;
 
 export const ServiceIcon = styled.Image`
+  border-color: #f5f5f5;
+  border-width: 1px;
   width: 40px;
   height: 40px;
-  border-radius: 20px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
   margin-right: 12px;
 `;
 

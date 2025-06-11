@@ -8,7 +8,9 @@
       "@screens/*": ["./src/screens/*"],
       "@storage/*": ["./src/storage/*"],
       "@util/*": ["./src/util/*"],
-      "@routes/*": ["./src/routes/*"]
+      "@routes/*": ["./src/routes/*"],
+      "@types/*": ["./src/types/*"],
+      "@i18n/*": ["./src/i18n/*"],
     }
   }
 }

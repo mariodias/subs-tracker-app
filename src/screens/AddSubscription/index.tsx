@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { ScrollView, Modal, FlatList, TouchableOpacity, Alert } from 'react-native';
+import { ScrollView, Modal, FlatList, TouchableOpacity, Alert, KeyboardAvoidingView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 
 import { createSubscription } from '@storage/subscription/createSubscription';
 
 import { availableServices, subscriptionPeriods, Service } from '@util/services';
-import { applyDateMask, isValidDate, applyValueMask } from '@util/apply-masks';
+import { applyValueMask } from '@util/apply-masks';
 
 import {
   Container,
@@ -40,7 +40,6 @@ export function AddSubscription() {
   const [customServiceName, setCustomServiceName] = useState('');
   const [price, setPrice] = useState('');
   const [selectedPeriod, setSelectedPeriod] = useState('');
-  const [nextBilling, setNextBilling] = useState('');
   const [isActive, setIsActive] = useState(true);
   const [showServiceModal, setShowServiceModal] = useState(false);
   const [showPeriodModal, setShowPeriodModal] = useState(false);
@@ -49,11 +48,6 @@ export function AddSubscription() {
 
   function handleNavigateToHome() {
     navigation.navigate('home');
-  };
-
-  function handleDateChange(text: string) {
-    const maskedDate = applyDateMask(text);
-    setNextBilling(maskedDate);
   };
 
   function handleValueChange(text: string) {
@@ -96,12 +90,7 @@ export function AddSubscription() {
         return;
       }
       
-      if (!isValidDate(nextBilling)) {
-        Alert.alert('SubsTracker', 'Por gentileza, informe uma data válida.');
-        return;
-      }
-      
-      const serviceName = selectedService?.name === 'other' ? customServiceName : selectedService?.name;
+      const serviceName = selectedService?.name === 'Outros' ? customServiceName : selectedService?.name;
       const id = new Date().getTime().toString();
       
       const data = await createSubscription({
@@ -110,12 +99,10 @@ export function AddSubscription() {
         serviceName: serviceName || '',
         price: parseFloat(price.replace(',', '.')),
         period: selectedPeriod,
-        billingDate: nextBilling,
         active: isActive,
       });
 
-      //console.log('Assinatura salva com sucesso:', data);
-      Alert.alert('SubsTracker', 'Assinatura salva com sucesso!');
+      Alert.alert('SubsTracker', `Assinatura ${data.serviceName} salva com sucesso!`);
       navigation.navigate('home');
     } catch (error) {
       console.error('Erro ao salvar assinatura:', error);
@@ -127,16 +114,14 @@ export function AddSubscription() {
     <Container>
       <Header>
         <TouchableOpacity onPress={handleNavigateToHome}>
-          <Ionicons name="arrow-back" size={24} color="#6C63FF" />
+          <Ionicons name="chevron-back-outline" size={28} color="#6C63FF" />
         </TouchableOpacity>
-        <HeaderActions>
-          <Title>Nova Assinatura</Title>
-        </HeaderActions>
+        <Title>Nova Assinatura</Title>
+        <Ionicons name="add-circle" size={28} color="#6C63FF" />
       </Header>
       <ScrollView 
         showsVerticalScrollIndicator={false}
         keyboardDismissMode='on-drag'
-        automaticallyAdjustKeyboardInsets
         >
         <Form>
           <InputContainer>
@@ -148,7 +133,7 @@ export function AddSubscription() {
               <Ionicons name="chevron-down" size={20} color="#666666" />
             </Select>
           </InputContainer>
-          {selectedService?.name === 'other' && (
+          {selectedService?.name === 'Outros' && (
             <InputContainer>
               <Label>Nome do Serviço</Label>
               <Input 
@@ -158,6 +143,15 @@ export function AddSubscription() {
               />
             </InputContainer>
           )}
+          <InputContainer>
+            <Label>Tipo</Label>
+            <Select onPress={() => setShowPeriodModal(true)}>
+              <SelectText>
+                {selectedPeriod || 'Selecione o tipo de assinatura'}
+              </SelectText>
+              <Ionicons name="chevron-down" size={20} color="#666666" />
+            </Select>
+          </InputContainer>
           <InputContainer>
             <Label>Valor</Label>
             <Input 
@@ -169,31 +163,14 @@ export function AddSubscription() {
             />
           </InputContainer>
           <InputContainer>
-            <Label>Data da próxima cobrança</Label>
-            <Input 
-              placeholder="DD/MM/AAAA"
-              value={nextBilling}
-              keyboardType="numeric"
-              returnKeyType="done"
-              onChangeText={handleDateChange}
-            />
-          </InputContainer>
-          <InputContainer>
-            <Label>Periodicidade</Label>
-            <Select onPress={() => setShowPeriodModal(true)}>
-              <SelectText>
-                {selectedPeriod || 'Selecione a periodicidade'}
-              </SelectText>
-              <Ionicons name="chevron-down" size={20} color="#666666" />
-            </Select>
-          </InputContainer>
-          <InputContainer>
             <Label>Status</Label>
             <SwitchContainer>
-              <SelectText>Status da Assinatura</SelectText>
+              <SelectText>{isActive ? 'Assinatura Ativa' : 'Assinatura Inativa'}</SelectText>
               <Switch
                 value={isActive}
                 onValueChange={setIsActive}
+                trackColor={{ true: '#6C63FF', false: '#ccc' }}
+                thumbColor={isActive? '#fff' : '#fff'}
               />
             </SwitchContainer>
           </InputContainer>
@@ -202,12 +179,11 @@ export function AddSubscription() {
       <Modal
         visible={showServiceModal}
         animationType="slide"
-        transparent
-      >
+        transparent>
         <ModalContainer>
           <ModalContent>
             <ModalHeader>
-              <ModalTitle>Selecione o Serviço</ModalTitle>
+              <ModalTitle>Selecione um serviço</ModalTitle>
               <TouchableOpacity onPress={() => setShowServiceModal(false)}>
                 <Ionicons name="close" size={24} color="#666666" />
               </TouchableOpacity>
@@ -228,12 +204,11 @@ export function AddSubscription() {
       <Modal
         visible={showPeriodModal}
         animationType="slide"
-        transparent
-      >
+        transparent>
         <ModalContainer>
           <ModalContent>
             <ModalHeader>
-              <ModalTitle>Selecione a Periodicidade</ModalTitle>
+              <ModalTitle>Selecione o tipo de assinatura</ModalTitle>
               <TouchableOpacity onPress={() => setShowPeriodModal(false)}>
                 <Ionicons name="close" size={24} color="#666666" />
               </TouchableOpacity>
@@ -250,9 +225,11 @@ export function AddSubscription() {
           </ModalContent>
         </ModalContainer>
       </Modal>
+      <KeyboardAvoidingView behavior="padding">
       <Button onPress={handleSaveSubscription}>
         <ButtonText>Salvar Assinatura</ButtonText>
       </Button>
+      </KeyboardAvoidingView>
     </Container>
   );
 }

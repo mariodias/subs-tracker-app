@@ -1,4 +1,3 @@
-// import styled from 'styled-components/native';
 import styled from '@emotion/native';
 
 export const Title = styled.Text`
@@ -18,12 +17,15 @@ export const Card = styled.TouchableOpacity`
 `;
 
 export const ServiceIcon = styled.Image`
+  border: 1px;
+  border-color: #E5E5EA;
   width: 60px;
   height: 60px;
-  border-radius: 30px;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
   margin-right: 16px;
-  border-width: 1px;
-  border-color:rgb(241, 241, 244);
 `;
 
 export const SubscriptionInfo = styled.View`
@@ -64,5 +66,5 @@ export const StatusIndicator = styled.View<{ active: boolean }>`
   background-color: ${(props: { active: boolean; }) => props.active ? '#34C759' : '#FF3B30'};
   position: absolute;
   top: 16px;
-  left: 16px;
+  right: 16px;
 `;

@@ -6,7 +6,6 @@ import {
   ServiceName,
   Price,
   Details,
-  Period,
   StatusIndicator,
 } from './styles';
 
@@ -15,7 +14,6 @@ type Subscription = TouchableOpacityProps & {
   serviceName: string;
   icon: string;
   price: number;
-  billingDate: string;
   period: string;
   active?: boolean;
 }
@@ -24,8 +22,7 @@ export function SubscriptionCard({
   id, 
   serviceName, 
   icon, 
-  price, 
-  billingDate, 
+  price,
   period,
   active = true, 
   ...rest
@@ -33,13 +30,12 @@ export function SubscriptionCard({
   return (
     <Card id={id} {...rest}>
       <StatusIndicator active={active} />
-      <ServiceIcon source={{uri: icon}} />
+      <ServiceIcon source={{ uri: icon }} />
       <SubscriptionInfo>
         <ServiceName>{serviceName}</ServiceName>
-        <Price>R$ {price.toFixed(2)}</Price>
-        <Details>Próxima cobrança: {billingDate}</Details>
+        <Price>$ {price.toFixed(2)}</Price>
+        <Details>Assinatura {period}</Details>
       </SubscriptionInfo>
-      <Period>{period}</Period>
     </Card>
   );
 }

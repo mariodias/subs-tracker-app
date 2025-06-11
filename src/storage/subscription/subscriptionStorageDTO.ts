@@ -3,7 +3,6 @@ export type SubscriptionStorageDTO = {
   serviceName: string,
   icon: string,
   price: number,
-  billingDate: string,
   period: string,
   active: boolean,
 }

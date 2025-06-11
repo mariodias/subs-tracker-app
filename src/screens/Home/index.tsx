@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { Alert, ScrollView } from 'react-native';
+import { Alert, ScrollView, TouchableOpacity } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -19,11 +19,16 @@ import {
 
 export function Home() {
 
+
   const [subscriptions, setSubscriptions] = useState<SubscriptionStorageDTO[]>([]);
 
   const navigation = useNavigation();
 
   const expenses = subscriptions.reduce((acc, subscription) => {
+      if (!subscription.active || subscription.period === 'Trial') {
+        return acc;
+      }
+      
       const monthlyValue = subscription.period === 'Anual' 
         ? subscription.price / 12 
         : subscription.price;
@@ -37,6 +42,10 @@ export function Home() {
 
   function handleNavigateToAddSubscription() {
     navigation.navigate('addSubscription');
+  }
+
+  function handleNavigateToStatistics() {
+    navigation.navigate('statistics');
   }
 
   async function fetchSubscriptions()  {
@@ -60,6 +69,9 @@ export function Home() {
     <Container>
       <Header>
         <Title><Ionicons name="reload-circle" size={32} color="#6C63FF"/>SubsTracker</Title>
+        <TouchableOpacity onPress={handleNavigateToStatistics}>
+          <Ionicons name="stats-chart" size={28} color="#6C63FF"/>
+        </TouchableOpacity>
       </Header>
       <TotalExpensesCard total={expenses} />
       <ScrollView
@@ -76,7 +88,6 @@ export function Home() {
             serviceName={subscription.serviceName}
             icon={subscription.icon}
             price={subscription.price}
-            billingDate={subscription.billingDate}
             period={subscription.period}
             active={subscription.active}
             onPress={() => handleNavigateToSubscriptionDetails(subscription.id)}
@@ -84,7 +95,7 @@ export function Home() {
         ))}
       </ScrollView>
       <AddButton onPress={handleNavigateToAddSubscription}>
-        <AddButtonText>Adicionar nova assinatura</AddButtonText>
+        <AddButtonText>Adicionar assinatura</AddButtonText>
       </AddButton>
     </Container>
   );

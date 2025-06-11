@@ -10,7 +10,7 @@ import { updateSubscriptionStatus } from '@storage/subscription/updateSubscripti
 import {
   Container,
   Header,
-  HeaderActions,
+  HeaderTitle,
   ServiceContainer,
   ServiceIcon,
   ServiceName,
@@ -74,7 +74,7 @@ export function SubscriptionDetails() {
   async function handleDeleteSubscription(id: string) {
     try {
       await deleteSubscription(id);
-      Alert.alert('SubsTracker', 'Assinatura excluída com sucesso!');
+      Alert.alert('SubsTracker', `Assinatura ${subscriptionDetails?.serviceName} excluída com sucesso!`);
       navigation.navigate('home');
     } catch (error) {
       console.error('Erro ao excluir assinatura:', error);
@@ -87,7 +87,7 @@ export function SubscriptionDetails() {
       if (tempIsActive !== isActive) {
         await updateSubscriptionStatus(params.id, tempIsActive);
         setIsActive(tempIsActive);
-        Alert.alert('SubsTracker', 'Status da assinatura atualizado com sucesso!');
+        Alert.alert('SubsTracker', `Status da assinatura ${subscriptionDetails?.serviceName} atualizado com sucesso!`);
         navigation.navigate('home');
       } else {
         console.log('Status da assinatura não foi alterado.');
@@ -106,13 +106,12 @@ export function SubscriptionDetails() {
     <Container>
       <Header>
         <TouchableOpacity onPress={handleNavigateToHome}>
-          <Ionicons name="arrow-back" size={24} color="#6C63FF" />
+          <Ionicons name="chevron-back-outline" size={28} color="#6C63FF" />
         </TouchableOpacity>
-        <HeaderActions>
-          <TouchableOpacity onPress={() => handleDeleteSubscription(params.id)}>
-            <Ionicons name="trash-outline" size={24} color="#FF3B30" />
+        <HeaderTitle>Detalhes da Assinatura</HeaderTitle>
+        <TouchableOpacity onPress={() => handleDeleteSubscription(params.id)}>
+            <Ionicons name="trash-outline" size={28} color="#FF3B30" />
           </TouchableOpacity>
-        </HeaderActions>
       </Header>
       <ScrollView showsVerticalScrollIndicator={false}>
         <ServiceContainer>
@@ -128,29 +127,27 @@ export function SubscriptionDetails() {
         <InfoSection>
           <InfoRow>
             <InfoLabel>Valor</InfoLabel>
-            <InfoValue>R$ {subscriptionDetails?.price.toFixed(2)}</InfoValue>
+            <InfoValue>$ {subscriptionDetails?.price.toFixed(2)}</InfoValue>
           </InfoRow>
           <InfoRow>
-            <InfoLabel>Periodicidade</InfoLabel>
-            <InfoValue>{subscriptionDetails?.period}</InfoValue>
+            <InfoLabel>Tipo</InfoLabel>
+            <InfoValue>Assinatura {subscriptionDetails?.period}</InfoValue>
           </InfoRow>
           <InfoRow>
-            <InfoLabel>Próxima Cobrança</InfoLabel>
-            <InfoValue>{subscriptionDetails?.billingDate}</InfoValue>
-          </InfoRow>
-          <InfoRow>
-            <InfoLabel>Assinatura Ativa</InfoLabel>
+            <InfoLabel>{tempIsActive ? 'Assinatura Ativa' : 'Assinatura Inativa'}</InfoLabel>
             <SwitchContainer>
               <Switch
                 value={tempIsActive}
                 onValueChange={handleToggleActive}
+                trackColor={{ true: '#6C63FF', false: '#ccc' }}
+                thumbColor={tempIsActive? '#fff' : '#fff'}
               />
             </SwitchContainer>
           </InfoRow>
         </InfoSection>
       </ScrollView>
       <EditButton onPress={() => handleSaveSubscriptionStatus()}>
-        <EditButtonText>Editar Assinatura</EditButtonText>
+        <EditButtonText>Atualizar status</EditButtonText>
       </EditButton>
     </Container>
   );
