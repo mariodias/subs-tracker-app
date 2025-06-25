@@ -17,8 +17,6 @@ export const Card = styled.TouchableOpacity`
 `;
 
 export const ServiceIcon = styled.Image`
-  border: 1px;
-  border-color: #E5E5EA;
   width: 60px;
   height: 60px;
   border-top-left-radius: 16px;

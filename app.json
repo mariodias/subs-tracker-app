@@ -2,7 +2,7 @@
   "expo": {
     "name": "subs-tracker",
     "slug": "subs-tracker",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/app-icon.png",
     "userInterfaceStyle": "light",
@@ -20,10 +20,16 @@
         "foregroundImage": "./assets/app-icon.png",
         "backgroundColor": "#6C63FF"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.piauilab.substracker"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "dd21730f-4266-4231-a9e3-5e2b0cfdf5cd"
+      }
     }
   }
 }
