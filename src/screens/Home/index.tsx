@@ -8,6 +8,7 @@ import { TotalExpensesCard } from '@components/TotalExpensesCard';
 
 import { getAllSubscriptions } from '@storage/subscription/getAllSubscriptions';
 import { SubscriptionStorageDTO } from '@storage/subscription/subscriptionStorageDTO';
+import { scheduleAllSubscriptionNotifications } from '@services/NotificationService';
 
 import {
   Container,
@@ -52,6 +53,9 @@ export function Home() {
     try {
       const data = await getAllSubscriptions();
       setSubscriptions(data);
+      
+      // Agenda notificações para todas as assinaturas ativas
+      await scheduleAllSubscriptionNotifications(data);
       
     } catch (error) {
       console.error('Erro ao carregar assinaturas:', error);

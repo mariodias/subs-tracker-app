@@ -12,8 +12,20 @@
       "resizeMode": "contain",
       "backgroundColor": "#6C63FF"
     },
+    "notification": {
+      "icon": "./assets/app-icon.png",
+      "color": "#6C63FF",
+      "androidMode": "default",
+      "androidCollapsedTitle": "SubsTracker"
+    },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "UIBackgroundModes": [
+          "fetch",
+          "remote-notification"
+        ]
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -21,7 +33,12 @@
         "backgroundColor": "#6C63FF"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.piauilab.substracker"
+      "package": "com.piauilab.substracker",
+      "permissions": [
+        "NOTIFICATIONS",
+        "RECEIVE_BOOT_COMPLETED",
+        "SCHEDULE_EXACT_ALARM"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"

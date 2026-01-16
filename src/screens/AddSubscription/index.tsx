@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ScrollView, Modal, FlatList, TouchableOpacity, Alert, KeyboardAvoidingView } from 'react-native';
+import { ScrollView, Modal, FlatList, TouchableOpacity, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -41,6 +41,7 @@ export function AddSubscription() {
   const [price, setPrice] = useState('');
   const [selectedPeriod, setSelectedPeriod] = useState('');
   const [isActive, setIsActive] = useState(true);
+  const [paymentDate, setPaymentDate] = useState('');
   const [showServiceModal, setShowServiceModal] = useState(false);
   const [showPeriodModal, setShowPeriodModal] = useState(false);
 
@@ -53,6 +54,17 @@ export function AddSubscription() {
   function handleValueChange(text: string) {
     const maskedValue = applyValueMask(text);
     setPrice(maskedValue);
+  };
+  
+  function handleDateChange(text: string) {
+    // Implementação básica de máscara para data no formato DD/MM/YYYY
+    let maskedDate = text.replace(/\D/g, '');
+    if (maskedDate.length > 0) {
+      maskedDate = maskedDate.replace(/^(\d{2})(\d)/, '$1/$2');
+      maskedDate = maskedDate.replace(/(\d{2})\/(\d{2})(\d)/, '$1/$2/$3');
+      maskedDate = maskedDate.substring(0, 10);
+    }
+    setPaymentDate(maskedDate);
   };
   
   function handleSelectService(service: Service) {
@@ -85,8 +97,26 @@ export function AddSubscription() {
         return;
       }
       
+      const priceValue = parseFloat(price.replace(',', '.'));
+      if (priceValue === 0 && selectedPeriod !== 'Trial') {
+        Alert.alert('SubsTracker', 'Assinaturas que não são do tipo Trial não podem ter valor zero.');
+        return;
+      }
+      
       if (!selectedPeriod) {
         Alert.alert('SubsTracker', 'Por gentileza, selecione a periodicidade.');
+        return;
+      }
+      
+      if (!paymentDate) {
+        Alert.alert('SubsTracker', 'Por gentileza, informe a data de pagamento.');
+        return;
+      }
+      
+      // Validação simples da data
+      const dateRegex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+      if (!dateRegex.test(paymentDate)) {
+        Alert.alert('SubsTracker', 'Por gentileza, informe uma data válida no formato DD/MM/YYYY.');
         return;
       }
       
@@ -97,9 +127,10 @@ export function AddSubscription() {
         id,
         icon: selectedService?.icon || '',
         serviceName: serviceName || '',
-        price: parseFloat(price.replace(',', '.')),
+        price: priceValue,
         period: selectedPeriod,
         active: isActive,
+        paymentDate: paymentDate,
       });
 
       Alert.alert('SubsTracker', `Assinatura ${data.serviceName} salva com sucesso!`);
@@ -160,6 +191,17 @@ export function AddSubscription() {
               returnKeyType="done"
               value={price}
               onChangeText={handleValueChange}
+            />
+          </InputContainer>
+          <InputContainer>
+            <Label>Data de Pagamento</Label>
+            <Input 
+              placeholder="DD/MM/YYYY"
+              keyboardType="numeric"
+              returnKeyType="done"
+              value={paymentDate}
+              onChangeText={handleDateChange}
+              maxLength={10}
             />
           </InputContainer>
           <InputContainer>

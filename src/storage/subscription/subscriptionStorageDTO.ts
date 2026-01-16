@@ -5,4 +5,5 @@ export type SubscriptionStorageDTO = {
   price: number,
   period: string,
   active: boolean,
+  paymentDate: string,
 }

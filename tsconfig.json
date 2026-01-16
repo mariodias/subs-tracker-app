@@ -11,6 +11,7 @@
       "@routes/*": ["./src/routes/*"],
       "@types/*": ["./src/types/*"],
       "@i18n/*": ["./src/i18n/*"],
+      "@services/*": ["./src/services/*"],
     }
   }
 }

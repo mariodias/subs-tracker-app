@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SUBSCRIPTION_COLLECTION } from '@storage/storageConfig';
 import { getAllSubscriptions } from './getAllSubscriptions';
 import { SubscriptionStorageDTO } from './subscriptionStorageDTO';
+import { scheduleSubscriptionNotification } from '@services/NotificationService';
 
 export async function createSubscription(newSubscription: SubscriptionStorageDTO) {
   try {
@@ -21,6 +22,11 @@ export async function createSubscription(newSubscription: SubscriptionStorageDTO
       SUBSCRIPTION_COLLECTION, 
       JSON.stringify(storage)
     );
+    
+    // Agenda notificação para a nova assinatura ou atualiza a existente
+    if (newSubscription.active) {
+      await scheduleSubscriptionNotification(newSubscription);
+    }
     
     return newSubscription;
   } catch (error) {
