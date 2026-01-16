@@ -31,24 +31,11 @@ A proposta é simples: **visualização clara, controle fácil e menos dinheiro 
 
 ## 📸 Telas do App
 
-### 🏠 Tela Inicial — Lista de Assinaturas
-Visualização geral com o valor total mensal e todas as assinaturas cadastradas.
-
-![Tela inicial do SubsTracker](./images/app-mockup.png)
-
----
-
-### 📊 Estatísticas
-Resumo completo de gastos mensais, anuais e distribuição das assinaturas.
-
-![Tela de estatísticas](./images/app-mockup-2.png)
-
----
-
-### 🔎 Detalhes da Assinatura
-Tela dedicada para visualizar e gerenciar uma assinatura específica.
-
-![Tela de detalhes da assinatura](./images/app-mockup-3.png)
+<div align="center">
+  <img src="./images/app-mockup.png" width="320" />
+  <img src="./images/app-mockup-2.png" width="320" />
+  <img src="./images/app-mockup-3.png" width="320" />
+</div>
 
 ---
 
