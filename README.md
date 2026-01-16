@@ -32,10 +32,11 @@ A proposta é simples: **visualização clara, controle fácil e menos dinheiro 
 ## 📸 Telas do App
 
 <div align="center">
-  <img src="./images/app-mockup.png" width="275" />
-  <img src="./images/app-mockup-2.png" width="275" />
-  <img src="./images/app-mockup-3.png" width="275" />
+  <img src="./images/app-mockup.png" width="260" style="max-height: 520px;" />
+  <img src="./images/app-mockup-2.png" width="260" style="max-height: 520px;" />
+  <img src="./images/app-mockup-3.png" width="260" style="max-height: 520px;" />
 </div>
+
 
 ---
 
